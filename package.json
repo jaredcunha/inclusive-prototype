@@ -1,7 +1,6 @@
 {
   "name": "accessible-prototype",
   "version": "0.1.0",
-  "homepage": "https://jaredcunha.github.io/inclusive-prototype",
   "private": true,
   "dependencies": {
     "@trussworks/react-uswds": "^2.8.0",
