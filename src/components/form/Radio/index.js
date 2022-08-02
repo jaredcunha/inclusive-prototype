@@ -1,4 +1,6 @@
-import { Field } from "formik";
+import React from 'react';
+import { Field } from 'formik';
+import PropTypes from 'prop-types';
 
 const Radio = ({ id, name, label, onClick }) => {
   return (
@@ -16,6 +18,13 @@ const Radio = ({ id, name, label, onClick }) => {
       </label>
     </div>
   );
+};
+
+Radio.propTypes = {
+  id: PropTypes.string.isRequired,
+  label: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  onClick: PropTypes.func.isRequired,
 };
 
 export default Radio;

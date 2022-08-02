@@ -1,26 +1,27 @@
-import { useNavigate } from "react-router-dom";
-import { useSessionStorage } from "../useSessionStorage";
-import { Button } from "@trussworks/react-uswds";
-import * as Yup from "yup";
-import { Formik, Form } from "formik";
-import { RadioSet, TextInput } from "../components/form";
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useSessionStorage } from '../useSessionStorage';
+import { Button } from '@trussworks/react-uswds';
+import * as Yup from 'yup';
+import { Formik, Form } from 'formik';
+import { RadioSet, TextInput } from '../components/form';
 
 const Page1 = () => {
-  const [firstName, setFirstName] = useSessionStorage("firstName", "");
-  const [lastName, setLastName] = useSessionStorage("lastName", "");
+  const [firstName, setFirstName] = useSessionStorage('firstName', '');
+  const [lastName, setLastName] = useSessionStorage('lastName', '');
   const [radioSelection, setRadioSelection] = useSessionStorage(
-    "radioSelection",
-    ""
+    'radioSelection',
+    '',
   );
 
   const navigate = useNavigate();
 
   const validationSchema = Yup.object({
-    firstName: Yup.string().required("Give a first name, idiot!"),
+    firstName: Yup.string().required('Give a first name, idiot!'),
     lastName: Yup.string().required(
-      "Ugggh. Last name!!!!! You forgot the last name."
+      'Ugggh. Last name!!!!! You forgot the last name.',
     ),
-    radioSelection: Yup.string().required("Select an option"),
+    radioSelection: Yup.string().required('Select an option'),
   });
 
   const initialValues = {
@@ -36,7 +37,7 @@ const Page1 = () => {
   };
 
   const onSubmit = () => {
-    navigate("review");
+    navigate('review');
   };
 
   return (
@@ -73,8 +74,8 @@ const Page1 = () => {
                 legend="Select an option"
                 name="radioSelection"
                 options={[
-                  { label: "Select this", id: "option1" },
-                  { label: "Select this too", id: "option2" },
+                  { label: 'Select this', id: 'option1' },
+                  { label: 'Select this too', id: 'option2' },
                 ]}
                 onClick={(e) => setRadioSelection(e.target.value)}
                 errors={errorChain(errors, errors.radioSelection)}

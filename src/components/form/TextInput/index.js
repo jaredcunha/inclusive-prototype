@@ -1,7 +1,9 @@
-import { useRef, useEffect } from "react";
-import classnames from "classnames";
-import { Field, ErrorMessage } from "formik";
-import { Label } from "@trussworks/react-uswds";
+import React from 'react';
+import PropTypes from 'prop-types';
+import { useRef, useEffect } from 'react';
+import classnames from 'classnames';
+import { Field, ErrorMessage } from 'formik';
+import { Label } from '@trussworks/react-uswds';
 
 const TextInput = ({ id, label, onKeyUp, errors }) => {
   const inputRef = useRef(null);
@@ -13,8 +15,8 @@ const TextInput = ({ id, label, onKeyUp, errors }) => {
   }, [errors]);
 
   const wrapperClasses = classnames(
-    "usa-form-group",
-    errors && "usa-form-group--error"
+    'usa-form-group',
+    errors && 'usa-form-group--error',
   );
 
   const renderError = (message) => (
@@ -41,6 +43,13 @@ const TextInput = ({ id, label, onKeyUp, errors }) => {
       />
     </div>
   );
+};
+
+TextInput.propTypes = {
+  id: PropTypes.string.isRequired,
+  label: PropTypes.string.isRequired,
+  onKeyUp: PropTypes.func.isRequired,
+  errors: PropTypes.object,
 };
 
 export default TextInput;

@@ -1,13 +1,14 @@
-import { useSessionStorage } from "../useSessionStorage";
+import React from 'react';
+import { useSessionStorage } from '../useSessionStorage';
 
 const Page2 = () => {
-  const [firstName] = useSessionStorage("firstName", false) || "false";
-  const [lastName] = useSessionStorage("lastName", false) || "false";
+  const [firstName] = useSessionStorage('firstName', false) || 'false';
+  const [lastName] = useSessionStorage('lastName', false) || 'false';
   const [radioSelection] =
-    useSessionStorage("radioSelection", false) || "false";
+    useSessionStorage('radioSelection', false) || 'false';
   return (
     <div className="padding-5">
-      <h1>Here's your info:</h1>
+      <h1>Here’s your info:</h1>
       <ul>
         <li>
           <strong>First name:</strong> {firstName}
