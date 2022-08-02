@@ -5,10 +5,8 @@ import * as Yup from "yup";
 
 describe("TextInput component", () => {
   const validationSchema = Yup.object({
-    firstName: Yup.string().required("Give a first name, idiot!"),
-    lastName: Yup.string().required(
-      "Ugggh. Last name!!!!! You forgot the last name."
-    ),
+    firstName: Yup.string().required("Provide a first name"),
+    lastName: Yup.string().required("Provide a last name."),
   });
 
   it("renders without errors", async () => {

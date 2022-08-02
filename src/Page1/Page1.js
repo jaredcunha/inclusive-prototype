@@ -3,11 +3,15 @@ import { useSessionStorage } from "../useSessionStorage";
 import { Button } from "@trussworks/react-uswds";
 import * as Yup from "yup";
 import { Formik, Form } from "formik";
-import { TextInput } from "../components/form";
+import { RadioSet, TextInput } from "../components/form";
 
 const Page1 = () => {
   const [firstName, setFirstName] = useSessionStorage("firstName", "");
   const [lastName, setLastName] = useSessionStorage("lastName", "");
+  const [radioSelection, setRadioSelection] = useSessionStorage(
+    "radioSelection",
+    ""
+  );
 
   const navigate = useNavigate();
 
@@ -16,11 +20,13 @@ const Page1 = () => {
     lastName: Yup.string().required(
       "Ugggh. Last name!!!!! You forgot the last name."
     ),
+    radioSelection: Yup.string().required("Select an option"),
   });
 
   const initialValues = {
     firstName: firstName,
     lastName: lastName,
+    radioSelection: radioSelection,
   };
 
   const errorChain = (errors, fieldError) => {
@@ -62,6 +68,18 @@ const Page1 = () => {
                 onKeyUp={(e) => setLastName(e.target.value)}
                 errors={errorChain(errors, errors.lastName)}
               />
+
+              <RadioSet
+                legend="Select an option"
+                name="radioSelection"
+                options={[
+                  { label: "Select this", id: "option1" },
+                  { label: "Select this too", id: "option2" },
+                ]}
+                onClick={(e) => setRadioSelection(e.target.value)}
+                errors={errorChain(errors, errors.radioSelection)}
+              />
+
               <Button type="submit" className="margin-top-5">
                 Submit
               </Button>
