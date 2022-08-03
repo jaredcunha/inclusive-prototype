@@ -12,6 +12,9 @@ const Radio = ({ id, name, label, onClick }) => {
         name={name}
         value={label}
         onClick={onClick}
+        onBlur={() => {
+          return false;
+        }}
       />
       <label className="usa-radio__label" htmlFor={id}>
         {label}
