@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSessionStorage } from '../useSessionStorage';
 import { Button } from '@trussworks/react-uswds';
@@ -7,6 +7,8 @@ import { Formik, Form } from 'formik';
 import { RadioSet, TextInput } from '../components/form';
 
 const Page1 = () => {
+  const navigate = useNavigate();
+  const [firstError, setFirstError] = useState('');
   const [firstName, setFirstName] = useSessionStorage('firstName', '');
   const [lastName, setLastName] = useSessionStorage('lastName', '');
   const [radioSelection, setRadioSelection] = useSessionStorage(
@@ -14,14 +16,10 @@ const Page1 = () => {
     '',
   );
 
-  const navigate = useNavigate();
-
   const validationSchema = Yup.object({
-    firstName: Yup.string().required('Give a first name, idiot!'),
-    lastName: Yup.string().required(
-      'Ugggh. Last name!!!!! You forgot the last name.',
-    ),
-    radioSelection: Yup.string().required('Select an option'),
+    firstName: Yup.string().required('First name is required'),
+    lastName: Yup.string().required('Last name is required.'),
+    radioSelection: Yup.string().required('An option is required.'),
   });
 
   const initialValues = {
@@ -30,10 +28,8 @@ const Page1 = () => {
     radioSelection: radioSelection,
   };
 
-  const errorChain = (errors, fieldError) => {
-    if (errors[Object.keys(errors)[0]] === fieldError) {
-      return fieldError;
-    }
+  const handleSubmitClick = () => {
+    setFirstError(null);
   };
 
   const onSubmit = () => {
@@ -42,7 +38,7 @@ const Page1 = () => {
 
   return (
     <div className="padding-5">
-      <h1>Test thing</h1>
+      <h1>Test form</h1>
 
       <div>
         <Formik
@@ -55,37 +51,48 @@ const Page1 = () => {
             resetForm();
           }}
         >
-          {({ errors }) => (
-            <Form>
-              <TextInput
-                id="firstName"
-                label="First name"
-                onKeyUp={(e) => setFirstName(e.target.value)}
-                errors={errorChain(errors, errors.firstName)}
-              />
-              <TextInput
-                id="lastName"
-                label="Last name"
-                onKeyUp={(e) => setLastName(e.target.value)}
-                errors={errorChain(errors, errors.lastName)}
-              />
+          {({ errors, isSubmitting }) => {
+            if (isSubmitting && Object.keys(errors)[0]) {
+              setFirstError(Object.keys(errors)[0]);
+            }
+            return (
+              <Form>
+                <TextInput
+                  id="firstName"
+                  label="First name"
+                  onKeyUp={(e) => setFirstName(e.target.value)}
+                  errors={errors.firstName}
+                  firstError={firstError}
+                />
+                <TextInput
+                  id="lastName"
+                  label="Last name"
+                  onKeyUp={(e) => setLastName(e.target.value)}
+                  errors={errors.lastName}
+                  firstError={firstError}
+                />
 
-              <RadioSet
-                legend="Select an option"
-                name="radioSelection"
-                options={[
-                  { label: 'Select this', id: 'option1' },
-                  { label: 'Select this too', id: 'option2' },
-                ]}
-                onClick={(e) => setRadioSelection(e.target.value)}
-                errors={errorChain(errors, errors.radioSelection)}
-              />
-
-              <Button type="submit" className="margin-top-5">
-                Submit
-              </Button>
-            </Form>
-          )}
+                <RadioSet
+                  legend="Select an option"
+                  name="radioSelection"
+                  options={[
+                    { label: 'Select this', id: 'option1' },
+                    { label: 'Select this too', id: 'option2' },
+                  ]}
+                  onClick={(e) => setRadioSelection(e.target.value)}
+                  errors={errors.radioSelection}
+                  firstError={firstError}
+                />
+                <Button
+                  type="submit"
+                  className="margin-top-5"
+                  onClick={() => handleSubmitClick()}
+                >
+                  Submit
+                </Button>
+              </Form>
+            );
+          }}
         </Formik>
       </div>
     </div>

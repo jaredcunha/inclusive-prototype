@@ -2,16 +2,17 @@ import React, { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import Radio from '../Radio';
-import { Fieldset, ErrorMessage } from '@trussworks/react-uswds';
+import { Fieldset } from '@trussworks/react-uswds';
 
-const RadioSet = ({ legend, name, options, onClick, errors }) => {
+const RadioSet = ({ legend, name, options, onClick, errors, firstError }) => {
   const ref = useRef(null);
+  const isFirstError = name === firstError ? true : false;
 
   useEffect(() => {
-    if (errors) {
+    if (isFirstError) {
       ref.current?.firstChild.focus();
     }
-  }, [errors]);
+  }, [isFirstError]);
 
   const wrapperClasses = classnames(
     'usa-form-group',
@@ -20,22 +21,17 @@ const RadioSet = ({ legend, name, options, onClick, errors }) => {
 
   return (
     <div className={wrapperClasses} ref={ref}>
+      {/* TODO: set up to put error message as line in legend  */}
       <Fieldset
         legend={legend}
         legendStyle="default"
-        tabIndex={errors ? `-1` : null}
+        tabIndex={isFirstError ? `-1` : null}
         className={errors ? 'usa-fieldset--error' : null}
       >
         {errors && (
-          <ErrorMessage name={name}>
-            <span
-              className="usa-error-message"
-              id={`${name}_error`}
-              role="alert"
-            >
-              {errors}
-            </span>
-          </ErrorMessage>
+          <span className="usa-error-message" id={`${name}_error`} role="alert">
+            {errors}
+          </span>
         )}
         {options.map((option, index) => (
           <Radio
@@ -52,11 +48,16 @@ const RadioSet = ({ legend, name, options, onClick, errors }) => {
 };
 
 RadioSet.propTypes = {
+  firstError: PropTypes.string,
   legend: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   options: PropTypes.array.isRequired,
   onClick: PropTypes.func.isRequired,
-  errors: PropTypes.object,
+  errors: PropTypes.string.isRequired,
+};
+
+RadioSet.defaultProps = {
+  errors: '',
 };
 
 export default RadioSet;

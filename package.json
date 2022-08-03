@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@trussworks/react-uswds": "^2.8.0",
+    "@trussworks/react-uswds": "^3.1.0",
     "classnames": "^2.3.1",
     "formik": "^2.2.9",
     "prop-types": "^15.8.1",
