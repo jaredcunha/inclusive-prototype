@@ -1,3 +1,7 @@
+# Rapid prototype
+
+This is still VERY much a proof of concept for building HTML forms that save information only in `sessionStorage`. In other words, there's no database. Any information is only stored in the browser tab and is removed when that tab is closed. To view the prototype, got to: https://jaredcunha-inclusive-prototype.netlify.app/
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
