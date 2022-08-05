@@ -2,22 +2,13 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { Formik } from 'formik';
 import Radio from '.';
-import * as Yup from 'yup';
 
 describe('Radio component', () => {
   const onClick = jest.fn();
 
-  const validationSchema = Yup.object({
-    radioOption: Yup.string().required('Select one option'),
-  });
-
   it('renders without errors', async () => {
     render(
-      <Formik
-        validationSchema={validationSchema}
-        validateOnChange={false}
-        validateOnBlur={false}
-      >
+      <Formik>
         <Radio
           id="Radio"
           name="radioOptions"
@@ -26,6 +17,7 @@ describe('Radio component', () => {
         />
       </Formik>,
     );
+    expect(screen.getByRole('radio')).toHaveAccessibleName();
     expect(screen.getByLabelText('Test option')).toBeInTheDocument();
   });
 });
