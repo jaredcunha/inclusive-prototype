@@ -5,7 +5,7 @@ import classnames from 'classnames';
 import { Field } from 'formik';
 import { Label } from '@trussworks/react-uswds';
 
-const TextInput = ({ id, label, onKeyUp, errors, firstError }) => {
+const TextInput = ({ id, label, onKeyUp, errors, firstError, required }) => {
   const inputRef = useRef(null);
   const isFirstError = id === firstError ? true : false;
 
@@ -39,7 +39,7 @@ const TextInput = ({ id, label, onKeyUp, errors, firstError }) => {
         className="usa-input"
         id={id}
         name={id}
-        aria-required="true"
+        aria-required={required ? 'true' : null}
         onKeyUp={onKeyUp}
         innerRef={inputRef}
         aria-describedby={errors ? `${id}_error` : null}
@@ -53,15 +53,17 @@ const TextInput = ({ id, label, onKeyUp, errors, firstError }) => {
 };
 
 TextInput.propTypes = {
-  firstError: PropTypes.string,
+  errors: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
   onKeyUp: PropTypes.func.isRequired,
-  errors: PropTypes.string.isRequired,
+  required: PropTypes.bool.isRequired,
+  firstError: PropTypes.string,
 };
 
 TextInput.defaultProps = {
   errors: '',
+  required: false,
 };
 
 export default TextInput;
