@@ -4,7 +4,7 @@ import { useSessionStorage } from '../useSessionStorage';
 import { Button } from '@trussworks/react-uswds';
 import * as Yup from 'yup';
 import { Formik, Form } from 'formik';
-import { RadioSet, TextInput } from '../components/form';
+import { RadioSet, Select, TextInput } from '../components/form';
 
 const Page1 = () => {
   const navigate = useNavigate();
@@ -15,17 +15,22 @@ const Page1 = () => {
     'radioSelection',
     '',
   );
+  const [dessert, setDessert] = useSessionStorage('dessert', '');
+
+  const desserts = ['Cake', 'Pie', 'Ice cream'];
 
   const validationSchema = Yup.object({
     firstName: Yup.string().required('First name is required'),
     lastName: Yup.string().required('Last name is required.'),
     radioSelection: Yup.string().required('An option is required.'),
+    dessert: Yup.string().required('Please select a product'),
   });
 
   const initialValues = {
     firstName: firstName,
     lastName: lastName,
     radioSelection: radioSelection,
+    dessert: dessert,
   };
 
   const handleSubmitClick = () => {
@@ -51,9 +56,9 @@ const Page1 = () => {
             resetForm();
           }}
         >
-          {({ errors, isSubmitting }) => {
+          {({ errors, isSubmitting, handleBlur, handleChange }) => {
             if (isSubmitting && Object.keys(errors)[0]) {
-              setFirstError(Object.keys(errors)[0]);
+              setTimeout(() => setFirstError(Object.keys(errors)[0]), 0);
             }
             return (
               <Form>
@@ -82,6 +87,20 @@ const Page1 = () => {
                   onClick={(e) => setRadioSelection(e.target.value)}
                   errors={errors.radioSelection}
                   firstError={firstError}
+                />
+
+                <Select
+                  id="dessert"
+                  label="Select box"
+                  onChange={(e) => {
+                    handleChange(e);
+                    setDessert(e.target.value);
+                  }}
+                  onBlur={handleBlur}
+                  errors={errors.dessert}
+                  firstError={firstError}
+                  options={desserts}
+                  selectedOption={dessert}
                 />
                 <Button
                   type="submit"
