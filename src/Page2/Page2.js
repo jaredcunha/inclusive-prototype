@@ -6,6 +6,7 @@ const Page2 = () => {
   const [lastName] = useSessionStorage('lastName', false) || 'false';
   const [radioSelection] =
     useSessionStorage('radioSelection', false) || 'false';
+  const [dessert] = useSessionStorage('dessert', false) || 'false';
   return (
     <div className="padding-5">
       <h1>Here’s your info:</h1>
@@ -18,6 +19,9 @@ const Page2 = () => {
         </li>
         <li>
           <strong>Radio selection:</strong> {radioSelection}
+        </li>
+        <li>
+          <strong>Select box selection:</strong> {dessert}
         </li>
       </ul>
     </div>
